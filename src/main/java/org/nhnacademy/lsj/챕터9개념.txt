@@ -1,0 +1,352 @@
+Recursion
+
+재귀란 ?
+
+재귀 = 본인이 자기 자신을 호출할 수 있는 서브루틴을 의미
+Recursive Subroutine 
+
+보통 재귀의 경우 계속해서 자기 자신을 호출하다가
+
+특정한 base case 에서 본인 호출을 멈추는 식으로 구현이 된다.
+
+
+Recursive Binary Search
+
+이진탐색의 경우 재귀적으로 구현이 가능함
+
+start, end를 파라미터로 받고 
+계속해서 start, end의 범위를 바꿔주면 됨 
+
+mid = start+end;
+mid/=2;
+
+mid번째 요소가 내가 찾는 값보다 작으면  
+함수를 다시 불러 BS(mid+1,end)
+
+값보다 커도 함수를 다시 불러 BS(start,mid-1)
+이렇게 범위를 줄여나가는 것임 
+
+근데 무한 루프가 돌아갈수 있잖아??
+
+그러니까 base case 즉 탈출할 case를 작성해줘
+
+if(arr[mid]==내가찾는 값) 혹은 if(start>end) break;
+
+해주는거지
+
+
+또 재귀는 재귀없이도 풀수있지만 매우 복잡해지고 귀찮아지는 
+몇몇 알고리즘들이 존재해
+
+하노이타워 혹은 dfs알고리즘이 그래.
+
+
+따라서 재귀는 일종의 테크닉이라고 보면 돼
+문제를 푸는데 유용한 테크닉 정도 
+
+
+Linked Data Structures
+
+
+재귀적인 클래스 정의또한 존재해
+
+
+public class Employee {
+       
+   String name;         
+ 
+   Employee supervisor;  // 이게 상급자
+} 
+
+이렇게 인스턴스 변수로 본인의 클래스 타입을 갖는 변수를 갖는거지
+
+만약 가장 높은 사람이 누군지를 볼라면 
+
+supervisor가 null인 사람이 가장 높겠지?
+
+그러면 계속 재귀적으로 가는거야
+
+ while ( runner.supervisor != null ) {
+         count++;  // Count the supervisor on this level.
+         runner = runner.supervisor; // Move up to the next level.
+      } 이렇게 계속해서 상급자 -> 상급자 -> 상급자 
+
+이런식으로 가는거지
+
+
+또 이런 애들은 linked list 로 구현이 돼있어 
+변수 supervisor 가 Employee 를 타입으로 갖는 객체를 가르키고 
+
+이게 반복돼서 또 가르키고 , 가르키고.... 그러다 null을 가르키면 끝나는거지
+
+이런걸 Linked Lists라고 해
+
+주로 node라는 걸 통해서 말해 
+
+class Node {
+   String item;
+   Node next;
+}
+
+이렇게 Node클래스가 Node타입의 인스턴스 변수를 갖는거지
+
+그러면?? -> Node p;
+p.next = new Node(무언가); 이런식으로 이어줄 수 있는거야 
+
+
+ Basic Linked List Processing
+
+일반적으로 Linked List는 처리할떄 맨 앞 노드 
+
+즉 head부터 시작해서 끝에있는 tail까지 가면서 작업을 처리해
+
+
+삽입을 하려면 head부터 시작해서 내가 삽입을 원하는 노드의 위치까지가
+p가 내가 원하는 노드의 위치라면  , 또 q가 내가 삽입을 원하는 노드라면 
+
+(p->prev)->next= q;
+q->prev= p->prev;
+q-> next = p;
+p->prev = q 
+
+이런식으로 이어지는거지
+
+삭제도 비슷해
+
+
+
+Stacks, Queues, and ADTs
+
+
+Abstract Data Type = ADT라는게 존재해
+
+ADT는 내부적인 연산 구현과 값들이 어떻게 표현되는지에 대한 
+명시없이 쓸수있는 가능한 값들과 연산의 집합을 의미해
+
+우리는 다양한 Abstract이 있어
+
+Control Abstract (제어추상화)
+
+Procedural Abstract (절차추상화)
+
+지금하려는건 ? Data Abstract (데이터 추상화)
+
+
+ADT라는건 , 그냥 자료구조 자체를 의미해
+
+애초에 자료구조라는게 어떄?
+그냥 갖다 쓰는거잖아 , 그 안에 구현 어떻게돼있는지 다 알고 쓰나??
+
+Map, Tree , Stack ,Queue ,Vector , Set , List , Array
+
+등등 이런 자료구조 들은 어떄? 전부다 data를 다루는 방식이야
+
+data를 어떤식으로 다룰지 , 정렬을 자동으로 할건지 , 중복을 허용하는지
+등등의 data를 다루는 방식을 나타내는게 = ADT야 
+
+그리고 이 ADT를 구현하잖아? 그럼 그게 Data Structure, 자료구조임 
+
+대표적인 예시로 Stack , Queue 있는데 
+FILO , FIFO 이라 유명한거일 뿐 
+
+Abstract Data Type은 엄청 많아.
+애초에 모든 자료구조는 ADT를 구체화 한 것 뿐임 
+
+그냥 상황에 따라서 , 문제에 따라서 특정한 자료구조를 쓰는거야
+
+예를들어 key값을 가지고 search하고싶어 그럼 map쓰는거야 
+
+인자를 계속해서 받고싶어 그래서 list 를 고려중이야
+
+근데 중간중간에 삽입 삭제가 많을 것 같아 그럼 LinkedList
+
+아냐 삽입이 일어나도 맨 마지막에서만 일어나고 중간중간 삽입 삭제하는 과정이
+거의 없을 것 같아 , 그럼 ArrayList야 
+
+그냥 ADT는 말 그대로 내가 다루고싶은 data를 간략하게 만든거야
+자료구조일 뿐임 
+
+내가 쓸 용도에 맞는 자료구조를 쓰면 되는 거임
+
+
+우리가 재귀적으로 함수를 계속 부르면 나오는 에러가있어
+
+그게뭐야? StackOverFLowError
+서브루틴이 재귀적으로 실행되면 혹은 그냥 실행된다고 하더라도
+
+이 모든 작업은 stack에 쌓인다.  
+모든 local 변수들 , 메서드의 파라미터 , return값 등등은
+stack에 쌓여 
+
+또 stack에는 size가 정해져 있는 것들만 올 수 있어 
+그래서 size정해놓기 떄문에 overFlow라는 개념도 있는 것임
+
+서브루틴이 활성화 되면 그 서브루틴에 대한
+Activation Records가 생성됨 
+여기에는  local 변수 , parameter , 복귀주소 등이 포함돼있어 
+
+
+
+Binary Trees
+
+비선형구조에 대표적인 예시야
+그게 뭐야? Tree 자료구조
+
+우리가 알고있는 대부분 stack , queue , list , deque , array
+전부다 뭐야? Linear Structure야 
+
+즉 선형적으로 데이터를 저장해 
+
+근데 tree , graph는 비선형적으로 데이터 저장해
+
+이진트리는 맨위에 root 가 있고 
+
+그 왼쪽 오른쪽 자식노드를 갖는 구조임 
+
+맨 아래에 있는 , 자식없는 노드를 leaf 노드라함 
+
+
+얘는 순회할떄 3가지 있어 preOrder , inOrder ,postOrder
+
+전위 중위 후위인데
+
+print -> left->  right 로 가면 전위순회
+
+left-> print -> right 가면 중위
+
+left -> right -> 해당노드 print 면 후위임 
+
+재귀적으로 불려져 
+
+
+
+
+Binary Sort Trees
+
+이진 정렬트리를 이용하면 검색과 삽입이 모두 효과적이야
+
+
+Expression Trees
+
+표현식트리는 수학식을 간단하게 표현 가능해
+
+얘는 postOrder로 식 계산이 가능해
+
+
+A Simple Recursive Descent Parser
+
+컴퓨터는 고급언어를 기계어로 번역해서 알아먹잖아
+
+그걸 컴파일이라고 하고 , 그럼 컴파일을 어캐하는거지??
+
+
+Backus-Naur Form
+(베커스 나우어 형식 , 베커스씨랑 나우어씨가 만든거)
+컴퓨터 언어에서 언어의 문법을 수학적인 수식으로 나타낼 때 사용함
+
+
+자연어(인간이쓰는 말)과 인공언어(기계어)는 문법이나 구조를 가지고 있어
+따라서 일련의 규칙으로 표현이 가능해 
+
+이런 규칙의 표현을 BNF로 표현하기도 해
+
+BNF는 생성 규칙들의 집합이야 , 예를 들면
+
+<digit> → 0 | 1 | 2 | … | 9
+
+이렇게 되면 digit은 0~9사이의 숫자가 되는 것
+
+이 digit으로 이루어지면 숫자다 라고 정의내릴수 있게됨
+
+또 다른 예시로
+
+<sentence>  ::=  <noun-phrase> <verb-phrase>
+
+::=  는 될수있다 를 의미 함
+이건 is가 아니라 can be임 , 왜?? 다른 것도 문장이 될 수도있잖아
+
+즉 문장을 정의하는 또 다른 규칙이 있을수도 있어
+
+
+<verb-phrase>  ::=  <intransitive-verb>  |
+                    ( <transitive-verb> <noun-phrase> )
+
+동사구 can be 자동사 | (타동사 , 명사구)
+
+
+<noun-phrase>  ::=  <common-noun> [ "that" <verb-phrase> ]  |
+                    <common-noun> [ <prepositional-phrase> ]...
+
+
+명사구 can be 공통명사 [ 동사구 ] | 공통명사 | 전치사구 ]
+
+명사구는 공통명사 일 수도있고 , 뒤에 that 과 verb가 올 수도 있고 , 뒤에 전치사구가 올 수도 있습니다.
+
+또 얘네는 재귀적일 수 있어 명사구는 동사구로 부분적으로 정의되고
+동사구는 명사구로 부분적으로 정의 됨
+
+이게 재귀적인거지
+
+< 명사구> 는 <동사구> 로 부분적으로 정의되는 반면, <동사구> 는 <명사구> 로 부분적으로 정의됩니다 .
+<명사구>는 "치즈를 먹은 쥐"가 될 수 있습니다. "치즈를 먹었다"는 < 동사구> 이기 때문입니다 .
+그러나 그러면 우리는 재귀적으로 < 일반 명사> " the cat", 단어 "that" 및 <동사> 에서 더 복잡한 <명사구>
+"the cat that catch the rat that ate the Cheese"를 만들 수 있습니다. -phrase> "치즈를 먹은 쥐를 잡았습니다".
+거기에서 우리는 <명사구> "치즈를 먹은 쥐를 잡은 고양이를 쫓은 개"를 만들 수 있습니다 .
+
+
+BNF는 Java와 같은 프로그래밍 언어의 구문을 형식적이고 정확한 방식으로 설명하는 데 사용될 수 있습니다. 예를 들어, <while-loop> 은 다음과 같이 정의될 수 있습니다.
+
+
+<while-loop>  ::=  "while" "(" <condition> ")" <statement>
+
+
+while - loop can be  while(조건문) <실행문>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
