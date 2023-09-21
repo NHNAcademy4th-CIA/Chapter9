@@ -14,9 +14,10 @@ public class Problem1 {
     private static final Logger logger = LoggerFactory.getLogger(Problem1.class);
 
     /**
+     * 재귀로 구현한 피보나치 함수.
      *
-     * @param N
-     * @return
+     * @param N 피보나치 함수 f(N).
+     * @return f(N)의 리턴값.
      */
     public static BigInteger fibonacci(BigInteger N) {
 

@@ -3,11 +3,21 @@ package org.nhnacademy.lsj;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 연결리스트를 만든 후 그 리스트의 reverse를 저장하는 프로그램.
+ */
 public class Problem3 {
 
 
     private static final Logger logger = LoggerFactory.getLogger(Problem3.class);
 
+    /**
+     * addNode를 통해서 리스트의 끝에 원소 넣어줌.
+     * reverseListNode 메서드를 통해 reverseList 만듦.
+     * reverseListNode 메서드는 내부적으로 getNodeByIndex 메서드 사용하는데.
+     * 이는 List의 특정 index를 return 하는 메서드 .
+     * 이를통해서 순차적으로 끝에서부터 처음 head까지 넣어준다.
+     */
     public static void problem3() {
 
 
@@ -29,6 +39,13 @@ public class Problem3 {
 
     }
 
+    /**
+     * 역방향 List만드는 메서드 .
+     * getNodeByIndex를 통해서 맨 끝부터 , 맨 처음 head까지 넣어줌.
+     *
+     * @param listNode reverseList를 만들 기준이 되는 기존 list.
+     * @return reverseList.
+     */
     public static ListNode reverseListNode(ListNode listNode) {
 
         ListNode answer = null;
@@ -49,6 +66,13 @@ public class Problem3 {
 
     }
 
+    /**
+     * List의 index번째 node를 반환함. get메서드와 같음.
+     *
+     * @param listNode 기준이되는 list.
+     * @param index    반환할 index.
+     * @return index번째 list .
+     */
     public static ListNode getNodeByIndex(ListNode listNode, int index) {
 
         for (int i = 0; i < index; i++) {
@@ -57,6 +81,12 @@ public class Problem3 {
         return new ListNode(listNode.getItem());
     }
 
+    /**
+     * List에 node를 추가하는 메서드 , next가 더 존재하지 않을때 까지 가서 추가된다.
+     *
+     * @param listNode 추가될 List.
+     * @param node     추가될 노드.
+     */
     public static void addNode(ListNode listNode, ListNode node) {
 
         listNode.addCount();
@@ -66,6 +96,12 @@ public class Problem3 {
         listNode.setNext(node);
     }
 
+    /**
+     * List를 출력한다.
+     * List의 next가 존재하지 않을 때 까지 next로 보냄.
+     *
+     * @param listNode 출력할 List.
+     */
     public static void printListNode(ListNode listNode) {
 
         while (listNode != null) {

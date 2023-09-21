@@ -7,9 +7,17 @@ import java.util.StringTokenizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * resources 에 있는 lsj.txt를 읽어  .
+ * 파일에 나오는 모든 단어를 이진 정렬트리에 넣는 프로그램.
+ */
 public class Problem2 {
 
 
+    /**
+     * br을 통해서 txt 읽음 , StringTokenizer를 통해 공백 제거 후 이진 정렬트리에 넣어줌.
+     * 이진정렬 트리의 add는 메서드로 구현돼있음 , 자동으로 정렬돼서 들어감.
+     */
     public static void problem2() {
 
         BinarySearchTree bst = null;
@@ -79,13 +87,23 @@ class BinarySearchTree {
         this.right = null;
     }
 
+    /**
+     * value가 왔을때
+     * root 보다 작으면 ==  즉 root아스키코드가 더 크면 -> 지금 들어온 value가 알파벳 선순위임
+     * 선순위는 left로.
+     * root 보다 크면 == 즉 root아스키코드가 더 작으면 -> 지금 들어오면 value가 알파벳 후순위임
+     * 후순위는 right로/
+     *
+     * @param bst   이진정렬트리 .
+     * @param value add할 value.
+     */
     public void add(BinarySearchTree bst, String value) {
 
 
         String temp = bst.getValue();
 
 
-        if (temp.compareTo(value) > 0) { // 아스키가 내가 더 커  , 죽 알파벳 후순위임
+        if (temp.compareTo(value) > 0) { // 아스키가 내가 더 커
             if (bst.left != null) {
                 add(bst.left, value);
 
@@ -93,7 +111,7 @@ class BinarySearchTree {
                 bst.left = new BinarySearchTree(value);
 
             }
-        } else if (temp.compareTo(value) < 0) { // 아스키가 내가 더 작 , 즉 알파벳 선순위야
+        } else if (temp.compareTo(value) < 0) { // 아스키가 내가 더 작아
 
             if (bst.right != null) {
                 add(bst.right, value);
@@ -107,6 +125,12 @@ class BinarySearchTree {
 
     }
 
+
+    /**
+     * preOrder 순회 .
+     *
+     * @param bst 이진정렬트리.
+     */
     public static void printPreOrder(BinarySearchTree bst) {
 
         if (bst == null) {
