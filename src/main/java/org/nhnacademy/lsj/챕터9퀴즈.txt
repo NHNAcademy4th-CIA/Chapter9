@@ -1,0 +1,295 @@
+Question 1:
+
+Explain what is meant by a recursive subroutine.
+
+재귀서브루틴은 서브루틴이 자기 자신을 호출하는 것을 의미합니다.
+
+
+
+Question 2:
+
+Consider the following subroutine:
+
+static void printStuff(int level) {
+    if (level == 0) {
+       System.out.print("*");
+    }
+    else {
+       System.out.print("[");
+       printStuff(level - 1);
+       System.out.print(",");
+       printStuff(level - 1);
+       System.out.print("]");
+    }
+}
+Show the output that would be produced by the subroutine calls 
+printStuff(0), printStuff(1), printStuff(2), and printStuff(3).
+
+
+*
+[*,*]
+[[*,*],[*,*]]
+[[[*,*],[*,*]],[[*,*],[*,*]]]
+
+
+
+Question 3:
+
+Suppose that a linked list is formed from objects that belong to the class
+
+class ListNode {
+   int item;       // An item in the list.
+   ListNode next;  // Pointer to next item in the list.
+}
+Write a subroutine that will count the number of zeros that occur in a given linked list of ints. 
+The subroutine should have a parameter of type ListNode and should return a value of type int.
+
+ListNode 타입 변수 list가 있다면 
+
+int count=0;
+while(list!=null){
+	if(list.item==0)
+		count++;
+	list=list.next;
+}
+
+
+
+
+Question 4:
+
+Let ListNode be defined as in the previous problem. 
+Suppose that head is a variable of type ListNode that points to the first node in a linked list. 
+Write a code segment that will add the number 42 
+in a new node at the end of the list. Assume that the list is not empty. 
+(There is no "tail pointer" for the list.)
+
+
+ListNode p= head;
+
+while(p->next!=NULL){
+	p=p->next;
+}
+
+// p->next는 이제 null , 즉 끝 
+
+ListNode q=new ListNode(42);
+
+p->next=q;
+
+
+
+Question 5:
+
+List nodes can be used to build linked data structures that do not have the form of linked lists. Consider the list node class shown on the left and the code shown on the right:
+
+class ListNode {                        ListNode one = new ListNode(10);
+    int item;                           ListNode two = new ListNode(20);
+    ListNode next;                      ListNode three = new ListNode(30);
+    Listnode(int i) {                   ListNode four = new ListNode(40);
+        item = i;                       one.next = two;
+        next = null;                    two.next = three;
+    }                                   three.next = four;
+}                                       four.next = two;
+Draw the data structure that is constructed by the code. What happens if you try to print the items in the data structure using the usual code for traversing a linked list:
+
+ListNode runner = one;
+while (runner != null) {
+    System.out.println(runner.item);
+    runner = runner.next();
+}
+
+10,20,30,40 (여기서부터 무한루프)20,30,40
+
+
+Question 6:
+
+What are the three operations on a stack?
+
+push , pop , isEmpty
+
+
+
+Question 7:
+
+What is the basic difference between a stack and a queue?
+
+구조가 다름 , stack은 선입후출  , queue는 선입선출 
+
+
+
+Question 8:
+
+What is an activation record? What role does a stack of activation records play in a computer?
+
+Activation Record는 서브루틴이 실행될떄 local 변수 , parameter , 복귀 메모리 등등을 
+갖고있어 
+
+얘는 stack으로 구현이 돼있어 , 근데 왜 stack이냐?
+
+만약 다음과 같은 함수 있다고 치자 add(int i ,int j) return i+j;
+
+그럼 서브루틴이 만들어 지겟지?
+
+맨 처음에 int i push되고 , int j push , i+j push 될꺼야
+
+그럼 결과값 반환해주려면 맨 위에있는 값만 pop해주면 되네?
+
+그래서 stack구조를 사용하는거임 
+
+모든 서브루틴은 Activation Records의 stack에 쌓이는거야 
+
+
+
+
+Question 9:
+
+Suppose that a binary tree of integers is formed from objects belonging to the class
+
+class TreeNode {
+   int item;       // One item in the tree.
+   TreeNode left;  // Pointer to the left subtree.
+   TreeNode right; // Pointer to the right subtree.
+}
+Write a recursive subroutine that will find the sum of all the nodes in the tree. 
+Your subroutine should have a parameter of type TreeNode, 
+and it should return a value of type int.
+
+
+
+TreeNode tree;
+
+int sum=0;
+
+static int sum(TreeNode tree){
+	int total=tree.item;
+
+	if(tree->left!=null)
+		total+=sum(tree->left);
+	if(tree->right!=null)
+		total+=sum(tree->right);
+	
+	return total;
+
+}
+
+
+
+Question 10:
+
+Let TreeNode be the same class as in the previous problem. 
+Write a recursive subroutine that makes a copy of a binary tree.
+ The subroutine has a parameter that points to the root of the tree that is to be copied
+. The return type is TreeNode, and the return value should be a pointer to the root of the copy. 
+The copy should consist of newly created nodes, 
+and it should have exactly the same structure as the original tree.
+
+
+
+static TreeNode copy(TreeNode tree){
+
+	TreeNode result;
+		
+	result = tree;
+
+	if(tree->left!=null){
+		result->left=tree->left;
+		copy(tree->left);
+	}
+		
+	if(tree->right!=null){
+		result->right=tree->right;
+		copy(tree->right);
+	}
+	return result;
+
+}
+
+
+
+Question 11:
+
+What is a postorder traversal of a binary tree?
+
+후위순회란 
+
+left-> right ->print 순을 의미함 
+
+left로 갈 수 있을떄 까지 가 -> right로 갈 수 있을떄 까지 가 -> left , right 둘다 없거나 방문했으면
+그떄 print해 
+
+즉 자식노드를 모두 확인한 후에 부모노드를 확인하는 방법임
+
+
+
+
+
+
+Question 12:
+
+Suppose that a binary sort tree of integers is initially empty 
+and that the following integers are inserted into the tree in the order shown:
+
+5   7   1   3   4   2   6
+Draw the binary sort tree that results. Then list the integers in the order 
+that is produced by a post-order traversal of the tree.
+
+
+2 4 3 1 6 7 5
+
+
+
+
+Question 13:
+
+Suppose that a <multilist> is defined by the BNF rule
+
+<multilist>  ::=  <word>  |  "(" [ <multilist> ]... ")"
+where a <word> can be any sequence of letters. Give five different <multilist>'s 
+that can be generated by this rule. (This rule, by the way, 
+is almost the entire syntax of the programming language LISP! 
+LISP is known for its simple syntax and its elegant and powerful semantics.)
+
+
+
+
+
+Question 14:
+
+Explain what is meant by parsing a computer program.
+
+Parsing = 구문분석
+
+문장을 이루고있는 구성 성분으로 분해하고 관계를 분석하여 문장의 구조를 결정하는 것
+
+컴퓨터 과학에서 parsing은 일련의 문자열을 의미있는 token으로 분해하고 그것들로 이루어진
+
+Parse tree를 만드는 과정
+
+Ex) 프로그램을 컴파일하는 과정에서 특정 프로그래밍 언어가 제시하는 문법을 잘 지켜서 작성했는지 검사하는 것
+
+인터넷에 주어진 정보를 내가 원하는대로 가공하여 서버에서 원하는 때 불러올 수 있도록 하는 것
+
+
+컴퓨팅에서 parse는 interpreter나 compiler의 구성 요소 중 하나
+parser = token을 검사하는 것
+
+Parsing을 하는 주체가 parser야 , 얘가 parsing을 하는 것
+
+
+후에 오타마타 이론에 대해서 더 공부하고 생각해보기 .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
