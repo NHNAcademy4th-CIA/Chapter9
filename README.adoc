@@ -1,0 +1,201 @@
+= Chapter9
+Firstname Lastname <author@asciidoctor.org>
+3.0, July 29, 2022: AsciiDoc article template
+:toc:
+:icons: font
+:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+
+
+== 1.재귀 서브 루틴 이 무엇을 의미하는지 설명하세요 .?
+.재귀 서브 루틴?
+====
+서브루틴 중 자기자신을 계속 호출하는 서브루틴
+====
+
+== 2.서브루틴 호출 printStuff(0) , printStuff(1) , printStuff(2) 및 printStuff(3) 에 의해 생성되는 출력을 표시합니다 .
+[source,java]
+----
+static void printStuff(int level) {
+    if (level == 0) {
+        System.out.print("*");
+    }
+    else {System.out.print("[");
+        printStuff(level - 1);
+        System.out.print(",");
+        printStuff(level - 1);
+        Sys tem.out.print("]");
+    }
+}
+----
+----
+*
+[*,*]
+[[*,*],[*,*]]
+[[[*,*],[*,*]],[[*,*],[*,*]]]
+----
+
+== 3.주어진 int 연결 리스트에서 발생하는 0의 개수를 계산하는 서브루틴을 작성하세요 . 서브루틴에는 ListNode 유형의 매개변수가 있어야 하며 int 유형의 값을 반환해야 합니다 .
+[source,java]
+----
+class ListNode {
+    int item;
+    ListNode next;
+}
+----
+
+[source,java]
+----
+static int countZeros( ListNode head ) {
+   int count;
+   ListNode runner;
+   count = 0;
+   runner = head;
+   while (runner != null) {
+      if ( runner.item == 0)
+         count++;
+      runner = runner.next;
+   }
+   return count;
+}
+
+static int countZerosRecursively( ListNode head ) {
+   if ( head == null) {
+       return 0;
+   }
+   else {
+       int count = countZerosRecursively( head.next );
+       if ( head.item == 0 )
+           count++;
+       return count;
+   }
+}
+----
+
+== 4.ListNode를 이전 문제와 같이 정의하겠습니다 . head가 연결된 목록의 첫 번째 노드를 가리키는 ListNode 유형의 변수라고 가정합니다 . 목록 끝에 있는 새 노드에 숫자 42를 추가하는 코드 세그먼트를 작성하세요 . 목록이 비어 있지 않다고 가정합니다. (목록에는 "꼬리 포인터"가 없습니다.)
+
+[source,java]
+----
+ListNode tail;
+while (tail.next != null) {
+    tail = tail.next;
+}
+ListNode node;
+node = new ListNode();
+node.item = 25
+tail.next = node; // 새 노드를 목록에 연결합니다.
+----
+
+== 5.**
+
+== 6. 스택 의 세 가지 작업은 무엇입니까 ?
+====
+push, pop, isEmpty
+====
+
+
+
+== 7. 스택과 큐의 기본적인 차이점은 무엇입니까?
+====
+stack은 FILO
+Queue는 FIFO
+====
+
+== 8.활성화 기록 이란 무엇입니까 ? 활성화 기록 더미는 컴퓨터에서 어떤 역할을 합니까?
+====
+
+====
+
+== 9. 트리에 있는 모든 노드의 합을 구하는 재귀 서브루틴을 작성하세요. 서브루틴에는 TreeNode 유형의 매개변수가 있어야 하며 int 유형의 값을 반환해야 합니다 .
+[source,java]
+----
+class TreeNode {
+   int item;       // One item in the tree.
+   TreeNode left;  // Pointer to the left subtree.
+   TreeNode right; // Pointer to the right subtree.
+}
+----
+
+[source,java]
+----
+static int treeSum( TreeNode root ) {
+    if ( root == null ) {
+       return 0;
+    }
+    else {
+       int total = root.item;
+       total += treeSum( root.left );
+       total += treeSum( root.right );
+       return total;
+    }
+ }
+----
+
+== 10.TreeNode를 이전 문제와 동일한 클래스로 둡니다 . 이진 트리의 복사본을 만드는 재귀 서브루틴을 작성하세요. 서브루틴에는 복사할 트리의 루트를 가리키는 매개변수가 있습니다. 반환 유형은 TreeNode 이고 반환 값은 복사본의 루트에 대한 포인터여야 합니다. 복사본은 새로 생성된 노드로 구성되어야 하며 원본 트리와 구조가 정확히 동일해야 합니다.
+[source,java]
+----
+static TreeNode copyTree( TreeNode root ){
+        // Make a copy of the tree that root points to.
+    if (root == null) {
+        return null;  // The copy of an empty tree is an empty tree
+    }
+    else {
+            // The tree is not empty.  We need to make a new node
+            // to be the root of the copy, and then we need to copy
+            // the left and right subtrees.
+         TreeNode rootOfCopy = new TreeNode();
+         rootOfCopy.item = root.item;
+         rootOfCopy.left = copyTree( root.left );
+         rootOfCopy.right = copyTree( root.right );
+         return rootOfCopy;
+    }
+}
+----
+
+== 11. 이진 트리의 후위 순회 란 무엇입니까 ?
+====
+왼쪽아래를 끝까지보고 오른쪽을보는 순회 방법.
+====
+
+== 12. 정수의 이진 정렬 트리가 처음에 비어 있고 다음 정수가 표시된 순서대로 트리에 삽입된다고 가정합니다.
+
+5 7 1 3 4 2 6
+결과로 나온 이진 정렬 트리를 그립니다. 그런 다음 트리의 후위 순회를 통해 생성된 순서대로 정수를 나열합니다.
+====
+====
+
+== 13. 이 문제의 경우 매우 간단하지만 완전한 클래스를 작성해야 합니다. 클래스는 0, 1, 2, 3, 4, ...를 계산하는 카운터를 나타냅니다. 클래스 이름은 Counter 여야 합니다 . 카운터 값을 나타내는 하나의 전용 인스턴스 변수가 있습니다 . 여기에는 두 가지 인스턴스 메서드가 있습니다. increment()는 카운터 값에 1을 추가하고 getValue()는 현재 카운터 값을 반환합니다. Counter 클래스에 대한 완전한 정의를 작성합니다 .
+[source,java]
+----
+/**
+ * 이 클래스의 객체는 0부터 계산되는 카운터를 나타냅니다.
+ */
+공용 클래스 Counter {
+
+   private int value = 0; // 카운터의 현재 값.
+
+   /**
+    * 카운터 값에 1을 더합니다.
+    */
+   public void increment() {
+      value++;
+   }
+
+   /**
+    * 카운터의 현재 값을 반환합니다.
+    */
+   public int getValue() {
+      반환 값;
+   }
+
+} // 클래스 끝 카운터
+
+// end::[]
+----
+
+== 14.컴퓨터 프로그램을 구문 분석한다는 것이 무엇을 의미하는지 설명하세요 .
+
+
+====
+컴퓨터 프로그램을 구문 분석한다는 것은 구문 구조를 결정하는 것, 즉 BNF 문법과 같은 문법 규칙을 사용하여 프로그램이 어떻게 구성될 수 있는지 알아내는 것을 의미합니다.
+
+====
