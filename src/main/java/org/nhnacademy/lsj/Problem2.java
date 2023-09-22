@@ -22,7 +22,6 @@ public class Problem2 {
 
         BinarySearchTree bst = null;
 
-        boolean flag = true;
 
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/lsj.txt"))) {
 
@@ -35,9 +34,8 @@ public class Problem2 {
 
                     String str = stk.nextToken();
 
-                    if (flag) {
+                    if (bst == null) {
                         bst = new BinarySearchTree(str);
-                        flag = false;
                         continue;
                     }
 

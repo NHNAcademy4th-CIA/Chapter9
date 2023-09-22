@@ -21,18 +21,21 @@ public class Problem3 {
     public static void problem3() {
 
 
-        ListNode listNode = new ListNode(0);
+        // ListNode listNode = new ListNode(0);
 
 
-        for (int i = 1; i <= 10; i++) {
-            addNode(listNode, new ListNode(i));
-        }
+//        for (int i = 1; i <= 10; i++) {
+//            addNode(listNode, new ListNode(i));
+//        }
+
+        ListNode listNode = addAllNode(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
         printListNode(listNode);
 
-        System.out.println(listNode.getCount());
-
         ListNode answer = reverseListNode(listNode);
+
+
+        System.out.println("\n");
 
         printListNode(answer);
 
@@ -52,7 +55,7 @@ public class Problem3 {
 
         int index = listNode.getCount();
 
-        for (int i = index; i >= 0; i--) {
+        for (int i = index; i > 0; i--) {
 
             if (answer == null) {
                 answer = getNodeByIndex(listNode, i);
@@ -62,6 +65,7 @@ public class Problem3 {
 
             addNode(answer, getNodeByIndex(listNode, i));
         }
+
         return answer;
 
     }
@@ -75,10 +79,13 @@ public class Problem3 {
      */
     public static ListNode getNodeByIndex(ListNode listNode, int index) {
 
-        for (int i = 0; i < index; i++) {
+
+        for (int i = 0; i < index - 1; i++) {
             listNode = listNode.getNext();
         }
+
         return new ListNode(listNode.getItem());
+
     }
 
     /**
@@ -111,7 +118,36 @@ public class Problem3 {
 
     }
 
+
+    public static ListNode addAllNode(int... num) {
+
+        ListNode head = null;
+        ListNode start = null;
+
+        for (int i = 0; i < num.length; i++) {
+
+            if (head == null) {
+                head = new ListNode(num[i]);
+                start = head;
+                start.addCount();
+                continue;
+            }
+
+            while (head.getNext() != null) {
+                head = head.getNext();
+            }
+
+            head.setNext(new ListNode(num[i]));
+            start.addCount();
+
+        }
+        return start;
+
+    }
+
+
 }
+
 
 class ListNode {
 

@@ -16,20 +16,22 @@ public class Problem1 {
     /**
      * 재귀로 구현한 피보나치 함수.
      *
-     * @param N 피보나치 함수 f(N).
+     * @param number 피보나치 함수 f(N).
      * @return f(N)의 리턴값.
      */
-    public static BigInteger fibonacci(BigInteger N) {
+    public static BigInteger fibonacci(BigInteger number) {
 
-        if (N.equals(BigInteger.ZERO)) {
+        if (number.equals(BigInteger.ZERO)) {
             return BigInteger.ONE;
-        } else if (N.equals(BigInteger.ONE)) {
+        } else if (number.equals(BigInteger.ONE)) {
             return BigInteger.ONE;
         }
 
-        return fibonacci(N.subtract(BigInteger.ONE))
-                .add(fibonacci(N.subtract(BigInteger.TWO)));
+        return fibonacci(number.subtract(BigInteger.ONE))
+                .add(fibonacci(number.subtract(BigInteger.TWO)));
     }
+
+
 
 
     /**
