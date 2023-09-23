@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 public class Problem2 {
 
 
+    private static final Logger logger = LoggerFactory.getLogger(Problem2.class);
+
+
     /**
      * br을 통해서 txt 읽음 , StringTokenizer를 통해 공백 제거 후 이진 정렬트리에 넣어줌.
      * 이진정렬 트리의 add는 메서드로 구현돼있음 , 자동으로 정렬돼서 들어감.
@@ -44,7 +47,8 @@ public class Problem2 {
             }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.info("읽을 파일이 존재하지 않습니다.\n프로그램을 종료합니다");
+            return;
         }
 
         BinarySearchTree.printPreOrder(bst);
@@ -100,16 +104,18 @@ class BinarySearchTree {
 
         String temp = bst.getValue();
 
+        String temp2 = temp.toLowerCase(); // 정렬하기위해 소문자로 통일 !
+        String value2 = value.toLowerCase();
 
-        if (temp.compareTo(value) > 0) { // 아스키가 내가 더 커
+
+        if (temp2.compareTo(value2) > 0) { // 아스키가 내가 더 커
             if (bst.left != null) {
                 add(bst.left, value);
-
             } else {
                 bst.left = new BinarySearchTree(value);
 
             }
-        } else if (temp.compareTo(value) < 0) { // 아스키가 내가 더 작아
+        } else if (temp2.compareTo(value2) < 0) { // 아스키가 내가 더 작아
 
             if (bst.right != null) {
                 add(bst.right, value);
