@@ -20,6 +20,7 @@ public class Problem4 {
      * 이진트리 생성 -> add 완료 -> Queue를 만든다 -> bfs통해서 tree요소들 print하기.
      */
     public static void problem4() {
+
         Queue<BinarySearchTree> q = new LinkedList<>();
 
         Scanner sc = new Scanner(System.in);
