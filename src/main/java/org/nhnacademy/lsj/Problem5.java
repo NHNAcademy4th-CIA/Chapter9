@@ -21,22 +21,51 @@ public class Problem5 {
     public static void problem5() {
 
 
-        BinarySearchTreeNumber bstn = new BinarySearchTreeNumber(150);
+        BinarySearchTreeNumber bst = new BinarySearchTreeNumber(150);
 
 
         for (int i = 1; i < 1023; i++) {
             double num = Math.random() * 300 + 1;
-            bstn.add(bstn, (Math.random() * 300 + 1));
+            bst.add(bst, (Math.random() * 300 + 1));
         }
 
-        BinarySearchTreeNumber.printPreOrderNumber(bstn);
+        BinarySearchTreeNumber.printPreOrderNumber(bst);
 
-        logger.info("leaf depth 합 {}", BinarySearchTreeNumber.sumLeafNodeDepth(bstn, 0));
 
-        logger.info("leaf Average depth {}", BinarySearchTreeNumber.sumLeafNodeDepth(bstn, 0)
-                / BinarySearchTreeNumber.countLeafNode(bstn));
+        logger.info("leaf depth 합 {}", BinarySearchTreeNumber.sumLeafNodeDepth(bst, 0));
 
-        logger.info("leaf Max Depth  {}", BinarySearchTreeNumber.getMaxDepth(bstn, 0));
+        logger.info("leaf Average depth {}", BinarySearchTreeNumber.sumLeafNodeDepth(bst, 0)
+                / BinarySearchTreeNumber.countLeafNode(bst, 1));
+
+        logger.info("leaf Max Depth  {}", BinarySearchTreeNumber.getMaxDepth(bst, 0));
+
+        logger.info("leaf Node 개수 {}", BinarySearchTreeNumber.countLeafNode(bst, 1));
+
+        SearchTree sumLeafDepth = new SearchTree() {
+            @Override
+            public double searchTree(BinarySearchTreeNumber bst, double number) {
+                return BinarySearchTreeNumber.sumLeafNodeDepth(bst, number);
+            }
+        };
+
+        SearchTree countLeafNode = new SearchTree() {
+            @Override
+            public double searchTree(BinarySearchTreeNumber bst, double number) {
+                return BinarySearchTreeNumber.countLeafNode(bst, number);
+            }
+        };
+
+        SearchTree maxLeafDepth = new SearchTree() {
+            @Override
+            public double searchTree(BinarySearchTreeNumber bst, double number) {
+                return BinarySearchTreeNumber.getMaxDepth(bst,number);
+            }
+        };
+
+
+        logger.info("{}", BinarySearchTreeNumber.calcLeaf(sumLeafDepth, bst, 0));
+        logger.info("{}", BinarySearchTreeNumber.calcLeaf(countLeafNode, bst, 1));
+        logger.info("{}", BinarySearchTreeNumber.calcLeaf(maxLeafDepth, bst, 0));
 
 
     }
@@ -48,7 +77,6 @@ class BinarySearchTreeNumber {
 
     private static final Logger logger = LoggerFactory.getLogger(BinarySearchTree.class);
 
-
     private BinarySearchTreeNumber left;
 
     private BinarySearchTreeNumber right;
@@ -57,6 +85,15 @@ class BinarySearchTreeNumber {
 
     public double getValue() {
         return value;
+    }
+
+
+    public void setLeft(BinarySearchTreeNumber left) {
+        this.left = left;
+    }
+
+    public void setRight(BinarySearchTreeNumber right) {
+        this.right = right;
     }
 
     public BinarySearchTreeNumber getLeft() {
@@ -84,25 +121,22 @@ class BinarySearchTreeNumber {
      */
     public void add(BinarySearchTreeNumber bst, double value) {
 
-
         double temp = bst.getValue();
 
 
         if (temp - value > 0) { // 내가 더 커 -> 그럼 left에
-            if (bst.left != null) {
-                add(bst.left, value);
+            if (bst.getLeft() != null) {
+                add(bst.getLeft(), value);
 
             } else {
-                bst.left = new BinarySearchTreeNumber(value);
-
+                bst.setLeft(new BinarySearchTreeNumber(value));
             }
         } else if (temp - value < 0) { // 내가 더 작아 -> 그럼 right로
 
-            if (bst.right != null) {
-                add(bst.right, value);
-
+            if (bst.getRight() != null) {
+                add(bst.getRight(), value);
             } else {
-                bst.right = new BinarySearchTreeNumber(value);
+                bst.setRight(new BinarySearchTreeNumber(value));
 
             }
 
@@ -128,65 +162,78 @@ class BinarySearchTreeNumber {
 
     }
 
-    public static int countLeafNode(BinarySearchTreeNumber bst) {
+    public static double countLeafNode(BinarySearchTreeNumber bst, double count) {
 
-        int count = 0;
+        double sum = 0;
 
-        if (bst.left == null && bst.right == null) {
-            return 1;
+        if (bst.getLeft() == null && bst.getRight() == null) {
+            return count;
         }
 
-        if (bst.left != null) {
-            count += countLeafNode(bst.left);
+        if (bst.getLeft() != null) {
+            sum += countLeafNode(bst.getLeft(), 1);
         }
 
-        if (bst.right != null) {
-            count += countLeafNode(bst.right);
+        if (bst.getRight() != null) {
+            sum += countLeafNode(bst.getRight(), 1);
         }
 
-        return count;
+        return sum;
 
     }
 
-    public static int getMaxDepth(BinarySearchTreeNumber bst, int depth) {
+    public static double getMaxDepth(BinarySearchTreeNumber bst, double depth) {
 
-        int maxDepth = 0;
+        double maxDepth = 0;
 
-        if (bst.left == null && bst.right == null) { // leaf 노드면
+        if (bst.getLeft() == null && bst.getRight() == null) { // leaf 노드면
             return depth;
         }
 
-        if (bst.left != null) {
-            maxDepth = Math.max(maxDepth, getMaxDepth(bst.left, depth + 1));
+        if (bst.getLeft() != null) {
+            maxDepth = Math.max(maxDepth, getMaxDepth(bst.getLeft(), depth + 1));
         }
 
-        if (bst.right != null) {
-            maxDepth = Math.max(maxDepth, getMaxDepth(bst.right, depth + 1));
+        if (bst.getRight() != null) {
+            maxDepth = Math.max(maxDepth, getMaxDepth(bst.getRight(), depth + 1));
         }
 
         return maxDepth;
 
     }
 
-    public static int sumLeafNodeDepth(BinarySearchTreeNumber bst, int depth) {
+    public static double sumLeafNodeDepth(BinarySearchTreeNumber bst, double depth) {
 
-        int depthSum = 0;
+        double depthSum = 0;
 
-        if (bst.left == null && bst.right == null) { // leaf 노드면
+        if (bst.getLeft() == null && bst.getRight() == null) { // leaf 노드면
             return depth;
         }
 
-        if (bst.left != null) {
-            depthSum += sumLeafNodeDepth(bst.left, depth + 1);
+        if (bst.getLeft() != null) {
+            depthSum += sumLeafNodeDepth(bst.getLeft(), depth + 1);
         }
 
-        if (bst.right != null) {
-            depthSum += sumLeafNodeDepth(bst.right, depth + 1);
+        if (bst.getRight() != null) {
+            depthSum += sumLeafNodeDepth(bst.getRight(), depth + 1);
         }
 
         return depthSum;
+    }
 
+    public static double calcLeaf(SearchTree searchTree, BinarySearchTreeNumber bst, double number) {
+        return searchTree.searchTree(bst, number);
     }
 
 
 }
+
+@FunctionalInterface
+interface SearchTree {
+
+    double searchTree(BinarySearchTreeNumber bst, double number);
+
+}
+
+
+
