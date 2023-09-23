@@ -31,7 +31,15 @@ public class Problem1 {
                 .add(fibonacci(number.subtract(BigInteger.TWO)));
     }
 
+    public static BigInteger factorial(BigInteger number) {
 
+        if (number.equals(BigInteger.ZERO)) {
+            return BigInteger.ONE;
+        }
+
+        return number.multiply(factorial(number.subtract(BigInteger.ONE)));
+
+    }
 
 
     /**
@@ -44,6 +52,15 @@ public class Problem1 {
             logger.info("{}", fibonacci(new BigInteger(String.valueOf(i))));
         }
 
+        for (int i = 0; i <= 10; i++) {
+            logger.info("{}", factorial(new BigInteger(String.valueOf(i))));
+        }
+
     }
 
 }
+
+
+/**
+ *
+ */
