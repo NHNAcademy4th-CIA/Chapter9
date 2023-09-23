@@ -1,0 +1,138 @@
+Question 1:Explain what is meant by a recursive subroutine.
+- 재귀적 서브루틴(또는 재귀적 방법)은 직접 또는 간접적으로 자신을 부르는 것
+    - 직접적으로 부른다고 하는 것은 정의에 정의되고 있는 서브루틴을 부르는 서브루틴 호출 문이 포함되어 있다는 것을 의미
+    - 간접적으로 자신을 부른다고 하는 것은 두 번째 서브루틴을 부른다는 것을 의미, 두 번째 서브루틴은 다시 첫 번째 서브루틴을 (직접 또는 간접적으로) 부른다는 것을 의미
+
+Question 2:Consider the following subroutine:
+
+static void printStuff(int level) {
+    if (level == 0) {
+       System.out.print("*");
+    }
+    else {
+       System.out.print("[");
+       printStuff(level - 1);
+       System.out.print(",");
+       printStuff(level - 1);
+       System.out.print("]");
+    }
+}
+Show the output that would be produced by the subroutine calls printStuff(0), printStuff(1), printStuff(2), and printStuff(3).
+*
+[*,*]
+[[*,*],[*,*]]
+[[[*,*],[*,*]], [[*,*],[*,*]]]
+
+Question 3:Suppose that a linked list is formed from objects that belong to the class
+
+class ListNode {
+   int item;       // An item in the list.
+   ListNode next;  // Pointer to next item in the list.
+}
+Write a subroutine that will count the number of zeros that occur in a given linked list of ints. The subroutine should have a parameter of type ListNode and should return a value of type int.
+
+int subroutine(ListNode head) {
+	int count = 9;
+	ListNode runner = head;
+	while (runner != null) {
+		if(counter.item==0) count++;
+		runner=runner.next;
+	}
+	return count;
+}
+
+Question 4:Let ListNode be defined as in the previous problem. Suppose that head is a variable of type ListNode that points to the first node in a linked list. Write a code segment that will add the number 42 in a new node at the end of the list. Assume that the list is not empty. (There is no "tail pointer" for the list.)
+
+ListNode tail;
+while(tail.next!=null) tail = tail.next; // tail로 감
+ListNode listnode = new ListNode();
+listNode.item = 42;
+tail.next = listNode;
+
+Question 5:List nodes can be used to build linked data structures that do not have the form of linked lists. Consider the list node class shown on the left and the code shown on the right:
+
+class ListNode {                        ListNode one = new ListNode(10);
+    int item;                           ListNode two = new ListNode(20);
+    ListNode next;                      ListNode three = new ListNode(30);
+    Listnode(int i) {                   ListNode four = new ListNode(40);
+        item = i;                       one.next = two;
+        next = null;                    two.next = three;
+    }                                   three.next = four;
+}                                       four.next = two;
+Draw the data structure that is constructed by the code. What happens if you try to print the items in the data structure using the usual code for traversing a linked list:
+
+ListNode runner = one;
+while (runner != null) {
+    System.out.println(runner.item);
+    runner = runner.next();
+}
+20 30 40 20 30 40 … 무한 반복
+
+Question 6:What are the three operations on a stack?
+- push(), pop(), isEmpty()
+
+Question 7:What is the basic difference between a stack and a queue?
+- stack은 가장 마지막에 들어간 아이템이 가장 먼저 나오고 queue는 가장 먼저 들어간 아이템이 가장 먼저 나온다.
+
+Question 8:What is an activation record? What role does a stack of activation records play in a computer?
+- 서브루틴이 호출되면 해당 서브루틴에 대한 activation record가 생성된다(스택에 배치)
+- 해당 로컬 변수, 매개 변수 및 반환 주소(서브루틴이 종료될 때 컴퓨터가 반환되어야 하는 프로그램의 지점)와 같이 서브루틴의 실행과 관련된 정보를 포함
+
+Question 9:
+
+Suppose that a binary tree of integers is formed from objects belonging to the class
+
+class TreeNode {
+   int item;       // One item in the tree.
+   TreeNode left;  // Pointer to the left subtree.
+   TreeNode right; // Pointer to the right subtree.
+}
+Write a recursive subroutine that will find the sum of all the nodes in the tree. Your subroutine should have a parameter of type TreeNode, and it should return a value of type int.
+
+int subroutine(TreeNode root) {
+	if (root == null) return 0;
+	int total = root.item;
+	total += subroutine(root.left);
+	total += subroutine(root.right);
+	return total;
+}
+
+Question 10:
+
+Let TreeNode be the same class as in the previous problem. Write a recursive subroutine that makes a copy of a binary tree. The subroutine has a parameter that points to the root of the tree that is to be copied. The return type is TreeNode, and the return value should be a pointer to the root of the copy. The copy should consist of newly created nodes, and it should have exactly the same structure as the original tree.
+
+Question 11:What is a postorder traversal of a binary tree?
+TreeNode subroutine(TreeNode root) {
+	if(root==null) return null;
+	TreeNode copy = new TreeNode();
+	copy.item = root.item;
+	copy.left= subroutine(root.left);
+	copy.right = subroutine(root.right);
+	return copy;
+}
+- 루틴의 preorder 순회를 사용한다
+- 왼쪽 서브트리→ 오른쪽 서브트리→ 루트 노드 순서로 순회한다.
+
+Question 12:Suppose that a binary sort tree of integers is initially empty and that the following integers are inserted into the tree in the order shown:
+
+5   7   1   3   4   2   6
+Draw the binary sort tree that results. Then list the integers in the order that is produced by a post-order traversal of the tree.
+- 루트 ⇒ 5
+- 왼쪽 하위 트리 : 1 ⇒ 3 ⇒ 2, 4
+- 오른쪽 하위 트리 : 7 ⇒ 6
+- 후위 순회 : 2 4 3 1 6 7 5
+
+Question 13:Suppose that a <multilist> is defined by the BNF rule
+
+<multilist>  ::=  <word>  |  "(" [ <multilist> ]... ")"
+where a <word> can be any sequence of letters. Give five different <multilist>'s that can be generated by this rule. (This rule, by the way, is almost the entire syntax of the programming language LISP! LISP is known for its simple syntax and its elegant and powerful semantics.)
+
+1. 그냥 아무 word
+2. ( ) ⇒ 0
+3. ( any numbers of multilist )
+4. ((multilist) (multilist)
+5. ((multilist(multilist)) (multilist(multilist))
+
+Question 14:Explain what is meant by parsing a computer program.
+- In parsing, code is taken from the preprocessor, broken into smaller pieces and analyzed so other software can understand it.
+- data structure를 짓는다
