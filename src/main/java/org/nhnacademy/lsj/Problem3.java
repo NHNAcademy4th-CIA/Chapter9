@@ -35,8 +35,6 @@ public class Problem3 {
         ListNode answer = reverseListNode(listNode);
 
 
-        System.out.println("\n");
-
         printListNode(answer);
 
 
@@ -53,13 +51,12 @@ public class Problem3 {
 
         ListNode answer = null;
 
-        int index = listNode.getCount();
+        int index = listNode.getListSize();
 
         for (int i = index; i > 0; i--) {
 
             if (answer == null) {
                 answer = getNodeByIndex(listNode, i);
-                answer.addCount();
                 continue;
             }
 
@@ -79,6 +76,12 @@ public class Problem3 {
      */
     public static ListNode getNodeByIndex(ListNode listNode, int index) {
 
+        // 이거 index가 음수인 경우에는 에러 터쳐줘야 함
+
+        if (index < 0) {
+            throw new IllegalArgumentException("0보다 작은 index는 올 수 없습니다.");
+        }
+
 
         for (int i = 0; i < index - 1; i++) {
             listNode = listNode.getNext();
@@ -96,7 +99,6 @@ public class Problem3 {
      */
     public static void addNode(ListNode listNode, ListNode node) {
 
-        listNode.addCount();
         while (listNode.getNext() != null) {
             listNode = listNode.getNext();
         }
@@ -129,7 +131,6 @@ public class Problem3 {
             if (head == null) {
                 head = new ListNode(num[i]);
                 start = head;
-                start.addCount();
                 continue;
             }
 
@@ -138,7 +139,6 @@ public class Problem3 {
             }
 
             head.setNext(new ListNode(num[i]));
-            start.addCount();
 
         }
         return start;
@@ -152,16 +152,11 @@ public class Problem3 {
 class ListNode {
 
     private int item;
-    private int count;
     private ListNode next;
 
     public ListNode(int item) {
         this.item = item;
         this.next = null;
-    }
-
-    public int getCount() {
-        return count;
     }
 
     public int getItem() {
@@ -176,8 +171,17 @@ class ListNode {
         this.next = listNode;
     }
 
-    public void addCount() {
-        this.count++;
+    public int getListSize() {
+
+        int count = 0;
+
+        ListNode listNode = this;
+
+        while (listNode != null) {
+            count++;
+            listNode = listNode.getNext();
+        }
+        return count;
     }
 
 
