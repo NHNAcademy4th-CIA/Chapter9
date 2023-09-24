@@ -13,25 +13,49 @@ public class Exercise2 {
     private static final Logger logger = LoggerFactory.getLogger(Exercise2.class);
 
     private static class TreeNode {
-        String item;
-        TreeNode left;
-        TreeNode right;
+        private String item;
+        private TreeNode left;
+        private TreeNode right;
 
         TreeNode(String str) {
             item = str;
         }
+
+        public TreeNode getLeft() {
+            return left;
+        }
+
+        public TreeNode getRight() {
+            return right;
+        }
+
+        public void setLeft(TreeNode left) {
+            this.left = left;
+        }
+
+        public void setRight(TreeNode right) {
+            this.right = right;
+        }
+
+        public String getItem() {
+            return item;
+        }
+
     }
 
     private static TreeNode root;
 
     /**
-     *
+     * .BufferedReader로 텍스트 파일을 읽어온 후 각 단어를 공백을 기준으로 split한다.
+     * 각각의 단어가 트리에 없다면 트리에 넣는다.
+     * 모든 단어를 트리에 넣은 후 inorder로 출력한다
+     * try - catch로 IOException을 잡는다.
      */
     public static void exercise2() {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/ex2.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] splitLine = line.trim().toLowerCase().split(" ");
+                String[] splitLine = line.trim().split(" ");
                 for (String word : splitLine) {
                     if (!treeContains(root, word)) {
                         // 있으면 넣지 않는다
@@ -52,31 +76,33 @@ public class Exercise2 {
         }
         TreeNode runner = root;
         while (true) {
-            if (newItem.compareTo(runner.item) < 0) { // string
-                if (runner.left == null) {
-                    runner.left = new TreeNode(newItem);
+            if (newItem.compareTo(runner.getItem()) < 0) { // string
+                if (runner.getLeft() == null) {
+                    runner.setLeft(new TreeNode(newItem));
                     return;
                 }
-                runner = runner.left;
-            } else {
-                if (runner.right == null) {
-                    runner.right = new TreeNode(newItem);
-                    return;
-                }
-                runner = runner.right;
+
+                runner = runner.getLeft();
+                continue;
             }
+            if (runner.getRight() == null) {
+                runner.setRight(new TreeNode(newItem));
+                return;
+
+            }
+            runner = runner.getRight();
         }
     }
 
     private static boolean treeContains(TreeNode root, String item) {
         if (root == null) {
             return false;
-        } else if (item.equals(root.item)) {
+        } else if (item.equals(root.getItem())) {
             return true;
-        } else if (item.compareTo(root.item) < 0) {
-            return treeContains(root.left, item);
+        } else if (item.compareTo(root.getItem()) < 0) {
+            return treeContains(root.getLeft(), item);
         } else {
-            return treeContains(root.right, item);
+            return treeContains(root.getRight(), item);
         }
     }
 
@@ -87,9 +113,9 @@ public class Exercise2 {
      */
     private static void treeList(TreeNode node) {
         if (node != null) {
-            treeList(node.left);
-            logger.info("{}", node.item);
-            treeList(node.right);
+            treeList(node.getLeft());
+            logger.info("{}", node.getItem());
+            treeList(node.getRight());
         }
     }
 }
