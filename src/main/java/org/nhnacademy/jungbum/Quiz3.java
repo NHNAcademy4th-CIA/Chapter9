@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
  */
 public class Quiz3 {
     private final Logger logger = LoggerFactory.getLogger(Quiz3.class);
-    ListNode answer = new ListNode(0);
+
 
     /***
      * 새로운 노드 4개생성후 연결
      */
     public Quiz3() {
+        ListNode answer = new ListNode();
         ListNode listNode1 = new ListNode(15);
         ListNode listNode2 = new ListNode(10);
         ListNode listNode3 = new ListNode(3);
@@ -24,7 +25,7 @@ public class Quiz3 {
         listNode2.setNext(listNode3);
         listNode3.setNext(listNode4);
 
-        reverse(listNode1).setNext(new ListNode());
+        reverse(listNode1,answer).setNext(new ListNode());
         while (answer.getListNode() != null) {
             logger.info("{}", answer.getItem());
             answer = answer.getListNode();
@@ -36,14 +37,14 @@ public class Quiz3 {
      * @param head 연결리스트 시작
      * @return 완성된 연결리스트 + 뒤집기 시작한 연결리스트
      */
-    public ListNode reverse(ListNode head) {
+    public ListNode reverse(ListNode head,ListNode answer) {
 
         if (head.getListNode() == null) {
             answer = new ListNode(head.getItem());
 //            logger.info("{}",head.getItem());
             return answer;
         } else {
-            ListNode tmp = reverse(head.getListNode());
+            ListNode tmp = reverse(head.getListNode(),answer);
             tmp.setNext(head);
             return tmp.getListNode();
         }
