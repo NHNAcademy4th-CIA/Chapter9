@@ -29,19 +29,48 @@ public class Exercise4 {
         while (!(input = scanner.nextLine()).isEmpty()) {
             treeNode.insertItem(input);
         }
-        treeNode.inorderTraversal();
+        treeNode.levelOrderTraversal();
     }
 }
 
 class TreeNode {
     private static final Logger logger = LoggerFactory.getLogger(Exercise4.class);
 
-    String item;
-    TreeNode left;
-    TreeNode right;
+    private String item;
+    private TreeNode left;
+    private TreeNode right;
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public TreeNode getLeft() {
+        return left;
+    }
+
+    public void setLeft(TreeNode left) {
+        this.left = left;
+    }
+
+    public TreeNode getRight() {
+        return right;
+    }
+
+
+    public TreeNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
 
     public TreeNode(String newItem) {
-        item = newItem;
+        setItem(newItem);
     }
 
     public TreeNode() {
@@ -52,42 +81,42 @@ class TreeNode {
 
     public void insertItem(String newItem) {
         if (root == null) {
-            root = new TreeNode(newItem);
+            setRoot(new TreeNode(newItem));
             return;
         }
         // not empty
-        TreeNode runner = root;
+        TreeNode runner = getRoot();
         while (true) {
-            if (newItem.compareTo(runner.item) < 0) { // string
-                if (runner.left == null) {
-                    runner.left = new TreeNode(newItem);
+            if (newItem.compareTo(runner.getItem()) < 0) { // string
+                if (runner.getLeft() == null) {
+                    runner.setLeft(new TreeNode((newItem)));
                     return;
                 }
-                runner = runner.left;
+                runner = runner.getLeft();
             } else {
-                if (runner.right == null) {
-                    runner.right = new TreeNode(newItem);
+                if (runner.getRight() == null) {
+                    runner.setRoot(new TreeNode(newItem));
                     return;
                 }
-                runner = runner.right;
+                runner = runner.getRight();
             }
         }
     }
 
-    void inorderTraversal() {
-        if (root == null) {
+    void levelOrderTraversal() {
+        if (getRoot() == null) {
             return;
         }
         Queue queue = new Queue();
-        queue.enqueue(root);
+        queue.enqueue(getRoot());
         while (!queue.isEmpty()) {
             TreeNode node = queue.dequeue();
-            if (node.left != null) {
-                queue.enqueue(node.left);
+            if (node.getLeft() != null) {
+                queue.enqueue(node.getLeft());
             }
-            logger.info("{}", node.item);
-            if (node.right != null) {
-                queue.enqueue(node.right);
+            logger.info("{}", node.getItem());
+            if (node.getRight() != null) {
+                queue.enqueue(node.getRight());
             }
         }
     }
