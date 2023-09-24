@@ -16,20 +16,41 @@ import org.slf4j.LoggerFactory;
 public class Exercise5 {
     private static final Logger logger = LoggerFactory.getLogger(Exercise5.class);
     private static TreeNode root;
+    private static final Random random = new Random();
+
 
     private static class TreeNode {
-        int item;
-        TreeNode left;
-        TreeNode right;
+        private int item;
+        private TreeNode left;
+        private TreeNode right;
 
         TreeNode(int n) {
             item = n;
+        }
+
+        public int getItem() {
+            return item;
+        }
+
+        public TreeNode getLeft() {
+            return left;
+        }
+
+        public void setLeft(TreeNode left) {
+            this.left = left;
+        }
+
+        public TreeNode getRight() {
+            return right;
+        }
+
+        public void setRight(TreeNode right) {
+            this.right = right;
         }
     }
 
     public static void exercise5() {
         root = null;
-        Random random = new Random();
 
         for (int i = 0; i < 1023; i++) {
             treeInsert(random.nextInt());
@@ -39,35 +60,36 @@ public class Exercise5 {
         logger.info("find the sum of depths of all the leaves : {}",
                 sumLeaf(root, 0));
         logger.info("find the maximum depth : {}", findMaxDepth(root, 0));
+        logger.info("Average depth of all the leaves in the tree : {}",
+                (sumLeaf(root, 0) / leafCount(root)));
     }
 
     private static int findMaxDepth(TreeNode root, int depth) {
         if (root == null) {
             return 0;
-        } else if (root.left == null && root.right == null) {
+        } else if (root.getLeft() == null && root.getRight() == null) {
             return depth;
         }
-        int leftMax = findMaxDepth(root.left, depth + 1);
-        int rightMax = findMaxDepth(root.right, depth + 1);
+        int leftMax = findMaxDepth(root.getLeft(), depth + 1);
+        int rightMax = findMaxDepth(root.getRight(), depth + 1);
         return Math.max(leftMax, rightMax);
     }
 
     private static int sumLeaf(TreeNode root, int depth) {
         if (root == null) {
             return 0;
-        } else if (root.left == null && root.right == null) {
+        } else if (root.getLeft() == null && root.getRight() == null) {
             return depth;
         }
-        return sumLeaf(root.left, depth + 1) + sumLeaf(root.right, depth + 1);
+        return sumLeaf(root.getLeft(), depth + 1) +
+                sumLeaf(root.getRight(), depth + 1);
     }
 
     private static int leafCount(TreeNode root) {
-        if (root == null) {
-            return 0;
-        } else if (root.left == null && root.right == null) {
+        if (root == null || root.getLeft() == null && root.getRight() == null) {
             return 1;
         }
-        return leafCount(root.left) + leafCount(root.right);
+        return leafCount(root.getLeft()) + leafCount(root.getRight());
     }
 
     private static void treeInsert(int newItem) {
@@ -76,19 +98,19 @@ public class Exercise5 {
         }
         TreeNode runner = root;
         while (true) {
-            if (newItem < runner.item) {
-                if (runner.left == null) {
-                    runner.left = new TreeNode(newItem);
+            if (newItem < runner.getItem()) {
+                if (runner.getLeft() == null) {
+                    runner.setLeft(new TreeNode(newItem));
                     return;
                 } else {
-                    runner = runner.left;
+                    runner = runner.getLeft();
                 }
             } else {
-                if (runner.right == null) {
-                    runner.right = new TreeNode(newItem);
+                if (runner.getRight() == null) {
+                    runner.setRight(new TreeNode(newItem));
                     return;
                 } else {
-                    runner = runner.right;
+                    runner = runner.getRight();
                 }
             }
         }
