@@ -18,7 +18,7 @@ public class Quiz5 {
      */
     public Quiz5() {
 
-        TreeNode.setRoot(null);
+        new TreeNode();
 
         for (int i = 0; i < 1023; i++)
             TreeNode.treeInsert(Math.random());
@@ -68,8 +68,8 @@ class TreeNode {
      * 루트값 설정하기
      * @param treeNode 루트값 입력
      */
-    public static void setRoot(TreeNode treeNode) {
-        root = treeNode;
+    public TreeNode() {
+        root = null;
     }
 
     /***
