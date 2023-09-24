@@ -1,5 +1,6 @@
 package org.nhnacademy.jungbum;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class Quiz4 {
     public void levelOrderPrint(TreeNodes root) {
         if (root == null) return;
         Queue<TreeNodes> queue;
-        queue = new LinkedList<>();
+        queue = new ArrayDeque<>();
         queue.add(root);
         while (queue.isEmpty() == false) {
             TreeNodes node = queue.poll();
