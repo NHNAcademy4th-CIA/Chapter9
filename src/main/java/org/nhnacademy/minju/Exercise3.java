@@ -13,7 +13,6 @@ public class Exercise3 {
     private static class ListNode {
         private int item;
         private ListNode next;
-        private int count;
 
         ListNode(int num) {
             this.item = num;
@@ -32,20 +31,24 @@ public class Exercise3 {
             return item;
         }
 
-        public void addCount() {
-            count++;
-        }
-
         public int getCount() {
+            int count = 0;
+            ListNode listNode = this;
+            while (listNode != null) {
+                count++;
+                listNode = listNode.getNext();
+            }
+
             return count;
         }
+
     }
 
     public static void exercise3() {
         ListNode head = addItem(1, 2, 3, 4, 5);
         print(head);
         logger.info("reversed = ");
-        ListNode reversed = copyListNode(head);
+        ListNode reversed = reverseCopyNode(head);
         print(reversed);
     }
 
@@ -57,14 +60,12 @@ public class Exercise3 {
             if (head == null) {
                 head = new ListNode(n);
                 start = head;
-                start.addCount();
                 continue;
             }
             while (head.getNext() != null) {
                 head = head.getNext();
             }
             head.setNext(new ListNode(n));
-            start.addCount();
         }
         return start;
     }
@@ -73,8 +74,9 @@ public class Exercise3 {
      * @param head 복사할 리스트 노드
      * @return 복사한 노드
      */
-    private static ListNode copyListNode(ListNode head) {
+    private static ListNode reverseCopyNode(ListNode head) {
         int count = head.getCount();
+
         ListNode copy = null;
         ListNode p = null;
 
@@ -98,6 +100,9 @@ public class Exercise3 {
      * @return head의 아이템을 가진 노드
      */
     private static ListNode jump(ListNode head, int index) {
+        if (index <= 0) {
+            throw new IllegalArgumentException("index가 1보다 작습니다.");
+        }
         for (int i = 0; i < index - 1; i++) {
             head = head.getNext();
         }
