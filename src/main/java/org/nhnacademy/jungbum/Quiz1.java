@@ -15,6 +15,7 @@ public class Quiz1 {
         BigInteger bigInteger = new BigInteger(scanner.next());
         logger.info("{}",customMath.factorial(bigInteger));
         logger.info("{}",customMath.fibonacci(bigInteger));
+        scanner.close();
     }
 }
 
