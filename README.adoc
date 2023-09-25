@@ -1,0 +1,56 @@
+= Chapter 9 프로그래밍 문제 및 퀴즈 정의
+
+=== link:https://math.hws.edu/javanotes/c9/exercises.html[Programing Exercise For Chapter 9]
+
+---
+
+==  Chapter 9 Quiz
+
+* Question 8:
+
+What is an activation record? What role does a stack of activation records play in a computer?
+
+.Answer
+[%collapsible%open]
+====
+Activation Record 란 서브루틴이 실행될떄 local 변수 , parameter , 복귀 메모리 등등을  담고있는 Stack 입니다.
+
+Stack에 들어가는 것은 Block 단위로 들어가게 됩니다.
+
+만약 add 메서드가 다음과 같다면
+
+add(int i,int j)
+
+
+맨 처음에 int i push되고 , int j push , i+j push 됩니다.
+
+결과값 반환해주려면 맨 위에있는 값만 pop해주면 되기 떄문에
+
+stack구조를 사용 합니다.
+====
+
+* Question 14:
+
+Explain what is meant by parsing a computer program.
+
+.Answer
+[%collapsible%open]
+====
+Parsing = 구문분석
+
+문장을 이루고있는 구성 성분으로 분해하고 관계를 분석하여 문장의 구조를 결정하는 것
+
+컴퓨터 과학에서 parsing은 일련의 문자열을 의미있는 token으로 분해하고 그것들로 이루어진
+
+Parse tree를 만드는 과정
+
+Ex) 프로그램을 컴파일하는 과정에서 특정 프로그래밍 언어가 제시하는 문법을 잘 지켜서 작성했는지 검사하는 것
+
+이 Parse tree를 만드는데 BNF같은 문법규칙을 사용한다.
+====
+
+
+
+
+
+
